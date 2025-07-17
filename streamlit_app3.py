@@ -7,8 +7,8 @@ import pandas as pd
 conn = sqlite3.connect("feedback.db")
 cursor = conn.cursor()
 
-# Drop the table if it exists
-cursor.execute("DROP TABLE IF EXISTS feedback")
+# # Drop the table if it exists
+# cursor.execute("DROP TABLE IF EXISTS feedback")
 
 # Create table if it doesn't exist
 cursor.execute("""
