@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS feedback (
 conn.commit()
 
 # App title
-st.title("COE Ventures Day – Leader Feedback Form")
+st.title("COE Ventures Day – Leader Evaluation Form")
 st.write("Please complete this form after each session to help us evaluate the featured ventures and improve future events.")
 
 # Feedback form
