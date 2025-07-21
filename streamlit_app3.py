@@ -15,6 +15,7 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS feedback (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
+    attended_sessions TEXT,
     relevance TEXT,
     innovation TEXT,
     maturity TEXT,
@@ -31,6 +32,12 @@ st.write("Please complete this form after each session to help us evaluate the f
 
 # Feedback form
 with st.form("feedback_form"):
+    # Question: Attended Sessions
+    attended_sessions = st.multiselect(
+        "Which all companies' sessions did you attend?",
+        ["RegScale", "With Accend", "Tellius"]
+    )
+
     # Question: Name
     name = st.text_input("Please add your name:")
 
@@ -71,11 +78,14 @@ with st.form("feedback_form"):
     submitted = st.form_submit_button("Submit Feedback")
 
     if submitted:
+        # Convert attended_sessions list to a comma-separated string
+        attended_sessions_str = ", ".join(attended_sessions)
+
         # Insert feedback into SQLite database
         cursor.execute("""
-        INSERT INTO feedback (name, relevance, innovation, maturity, presentation, follow_up, comments)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, (name, q1, q2, q3, q4, q5, comments))
+        INSERT INTO feedback (name, attended_sessions, relevance, innovation, maturity, presentation, follow_up, comments)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (name, attended_sessions_str, q1, q2, q3, q4, q5, comments))
         conn.commit()
         st.success("Thank you for your feedback!")
 
